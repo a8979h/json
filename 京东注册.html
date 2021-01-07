@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>京东注册</title>
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+            }
+            table{
+                height: 200px;
+                margin: 50px auto 0;
+            }
+            span{
+                display: inline-block;
+                width: 100px;
+            }
+            #entype{
+                margin-top: 50px;
+               margin-left: 900px;
+            }
+        </style>
+        <script src="./ajax.js"></script>
+    </head>
+    <body>
+        <form action="data.json" method="post" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    <td><span>用户名</span><input type="text" placeholder="您的账户名或登录名"></td>
+                </tr>
+                <tr>
+                    <td><span>设置密码</span><input type="password" placeholder="建议使用两种或两种以上字符组合"></td>
+                </tr>
+                <tr>
+                    <td><span>确认密码</span><input type="password" placeholder="请再次输入密码"></td>
+                </tr>
+                <tr>
+                    <td><span>邮箱验证</span><input type="text" placeholder="请输入邮箱"></td>
+                </tr>
+                <tr>
+                    <td><span>邮箱验证码</span><input type="password" placeholder="请输入邮箱验证码"><input id="random" type="button" value="获取验证码"></td>
+                </tr>
+            </table>
+            <input id="entype" type="button" value="立即注册">
+        </form>
+        <script>
+            entype.onclick = function(){
+                let inp = document.querySelectorAll('input');
+                ajax({
+                    url:'http://localhost:3001/add',
+                    data:{userName:inp[0].value,passWord:inp[1].value,double:inp[2].value,email:inp[3].value,text:inp[4].value},
+                    method:'post',
+                    success:function (res){
+                        console.log(res)
+                    }
+                })
+                for(let i = 0;i < inp.length-2;i++){
+                    inp[i].value = null;
+                }
+            }
+            random.onclick = function(){
+                let email = this.previousElementSibling;
+                email.value = ''+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)+Math.floor(Math.random()*10)
+            }
+        </script>
+    </body>
+</html>
